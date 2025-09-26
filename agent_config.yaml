@@ -1,0 +1,16 @@
+default_brand: astro
+astro:
+  display_name: "Astrolaboral"
+  whatsapp: "+54 9 341 272 4947"
+  email: "comercial@astrolaboral.com.ar"
+  city: "Rosario, Santa Fe"
+  intents:
+    - agendar_examenes
+    - cotizar_servicio
+    - ausentismo_virtual
+    - atencion_en_planta
+    - preguntas_frecuentes
+faq:
+  - "¿Qué incluye un preocupacional?"
+  - "¿Hacen control de ausentismo virtual?"
+  - "¿Se pueden hacer operativos en planta?"

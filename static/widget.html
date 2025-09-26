@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8"/>
+<title>Agente Astrolaboral</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<body style="font-family:system-ui;background:#0f172a;color:#e2e8f0;margin:0">
+<div style="max-width:680px;margin:0 auto;padding:24px">
+  <div style="background:#111827;border:1px solid #1f2937;border-radius:12px;padding:16px">
+    <h1>Agente de <b>Astrolaboral</b></h1>
+    <div id="chat" style="margin:10px 0;padding:10px;border-radius:8px;background:#0b1220;height:320px;overflow:auto"></div>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <input id="msg" placeholder="Escribí tu consulta…" style="flex:1;padding:12px;border-radius:8px;border:1px solid #334155;background:#0b1220;color:#e2e8f0"/>
+      <button id="send" style="padding:12px;border-radius:8px;border:1px solid #334155;background:#0b3b2e;color:#e2e8f0">Enviar</button>
+    </div>
+  </div>
+</div>
+<script>
+const chat = document.getElementById('chat');
+const inp = document.getElementById('msg');
+const btn = document.getElementById('send');
+let session_id = 'demo-' + Math.random().toString(36).slice(2);
+function add(role, text){
+  const d = document.createElement('div');
+  d.textContent = (role==='user'?'👤 ':'🤖 ') + text;
+  chat.appendChild(d);
+  chat.scrollTop = chat.scrollHeight;
+}
+async function send(){
+  const text = inp.value.trim();
+  if(!text) return;
+  add('user', text);
+  inp.value='';
+  const r = await fetch('/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({session_id,message:text})});
+  const data = await r.json();
+  add('bot', data.message);
+}
+btn.onclick = send;
+inp.onkeydown = (e)=>{ if(e.key==='Enter') send(); }
+</script>
